@@ -10,5 +10,6 @@
   "cleanup_percent": 80,
   "auto_slides": true,
   "debug_ldr": false,
+  "usb_drive_auto": true,
   "ldr": { "r10": 15000, "gamma": 0.65, "r_fixed": 47000 }
 }

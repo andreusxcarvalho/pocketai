@@ -25,6 +25,7 @@ bool DeviceConfig::load(Storage& storage) {
   cleanupPercent = doc["cleanup_percent"] | cleanupPercent;
   autoSlides = doc["auto_slides"] | autoSlides;
   debugLdr = doc["debug_ldr"] | debugLdr;
+  usbDriveAuto = doc["usb_drive_auto"] | usbDriveAuto;
   ldr.r10 = doc["ldr"]["r10"] | ldr.r10;
   ldr.gamma = doc["ldr"]["gamma"] | ldr.gamma;
   ldr.rFixed = doc["ldr"]["r_fixed"] | ldr.rFixed;

@@ -112,6 +112,9 @@ WavRecorder::Format audioFormat() {
 }
 uint32_t bytesPerSecond() { return FEAT_ADPCM ? kAdpcmBytesPerSecond : kPcmBytesPerSecond; }
 
+// Below ~2.5 V there is no cell on the BAT pads (bench use on USB power): never "low".
+bool batteryLow(float v) { return v > 2.5f && v < kLowBatteryCutoffV; }
+
 }  // namespace
 
 // ------------------------------------------------------------------ tasks
@@ -295,7 +298,7 @@ void App::setup() {
 #endif
 
 #if FEAT_BATTERY
-  if (battery.readVolts() < kLowBatteryCutoffV) {
+  if (batteryLow(battery.readVolts())) {
     handle(Event::BatteryLow);
     return;
   }
@@ -426,6 +429,7 @@ void App::stopRecording() {
   finalizeReq = true;
   const uint32_t start = millis();
   while (!finalized && millis() - start < 5000) delay(10);
+  delay(50);  // let the audio task finish any read in flight before the driver goes away
   audio.end();
   writeMarks();
   writeSessionMeta(finalized ? "complete" : "recording");
@@ -624,7 +628,7 @@ void App::pollSensors(uint32_t now) {
 #if FEAT_BATTERY
   if (now - lastBattery >= 60000) {
     lastBattery = now;
-    if (battery.readVolts() < kLowBatteryCutoffV) handle(Event::BatteryLow);
+    if (batteryLow(battery.readVolts())) handle(Event::BatteryLow);
   }
 #endif
 #if FEAT_WATCHDOG
@@ -670,7 +674,7 @@ void App::pollUsb() {
 #if FEAT_USB_DRIVE
   static bool wasHost = false;
   const bool host = usbDrive.hostConnected();
-  if (host && !wasHost && state_ == State::Home) handle(Event::UsbAttached);
+  if (host && !wasHost && state_ == State::Home && cfg.usbDriveAuto) handle(Event::UsbAttached);
   if (state_ == State::UsbDrive && (!host || usbDrive.ejected())) handle(Event::UsbDetached);
   wasHost = host;
 #endif

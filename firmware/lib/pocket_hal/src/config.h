@@ -18,6 +18,7 @@ struct DeviceConfig {
   uint8_t cleanupPercent = 80;                       // delete oldest synced sessions above this
   pocket::LdrCalibration ldr;
   bool autoSlides = true;
+  bool usbDriveAuto = true;                          // v08+: become a USB drive when a computer connects
   bool debugLdr = false;                             // print LDR volts every second (calibration)
 
   bool load(Storage& storage);  // missing file = defaults; returns true if a file was read

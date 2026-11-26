@@ -13,7 +13,7 @@ recorder. Features are switched in [`firmware/include/pocket_features.h`](../fir
 | `v05_wifi_sync` | Wi-Fi sync | Hold MODE 2 s: joins Wi-Fi, sets the clock by NTP, uploads finished sessions to the Pi inbox with SHA-256 checks, clears old synced sessions above 80% full. | `/config.json`, Pi inbox |
 | `v06_compact_audio` | Compact audio | IMA-ADPCM recording: about 29 MB/hour instead of 115 MB/hour. | — |
 | `v07_auto_slides` | Auto slides | Every 5 s while recording, a small frame is compared with the last slide; when it changes and settles, a photo is taken automatically. | — |
-| `v08_usb_drive` | USB drive | Plugging into a computer or iPhone (data cable, idle) shows the SD card as a drive "Pocket Recorder". Eject, or hold REC, to leave. | TinyUSB build flag (set) |
+| `v08_usb_drive` | USB drive | Plugging into a computer or iPhone (data cable, idle) shows the SD card as a drive "Pocket Recorder". Eject, or hold REC, to leave. Set `"usb_drive_auto": false` while developing so flashing doesn't trigger it. | TinyUSB build flag (set) |
 | `v09_ble_companion` | BLE companion | Bluetooth LE status/control: `companion/pocket_companion.py status | settime | rec | mark | stop | sync | privacy`. | `pip install bleak` |
 | `v10_full` | Full product | OTA firmware updates from the inbox after each sync, task watchdog, Settings screen (version, mic gain, live lux, Wi-Fi). | — |
 
