@@ -26,6 +26,7 @@ class Options:
     ollama_url: str = "http://localhost:11434"
     dedupe_distance: int = 6     # dHash bits; lower = stricter "same slide"
     ocr: bool = True
+    transcribe: bool = True      # False: skip speech-to-text (testing without faster-whisper)
 
 
 Transcriber = Callable[[Path], list[Segment]]
@@ -42,7 +43,7 @@ def process_session(session_dir: Path, out_dir: Path, opts: Options = Options(),
     tpath = work / "transcript.json"
     if tpath.exists():
         segs = segments_from_json(json.loads(tpath.read_text()))
-    elif s.audio_path.exists():
+    elif s.audio_path.exists() and opts.transcribe:
         if transcriber is None:
             from .transcribe import transcribe
 

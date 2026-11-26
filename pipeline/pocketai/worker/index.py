@@ -13,6 +13,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS chunks USING fts5(
 
 class SearchIndex:
     def __init__(self, path: Path):
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(path)
         self.db.executescript(SCHEMA)
 

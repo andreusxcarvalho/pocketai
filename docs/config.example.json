@@ -1,0 +1,14 @@
+{
+  "device_name": "pocket",
+  "wifi_ssid": "YourHomeWiFi",
+  "wifi_pass": "change-me",
+  "server": "http://pocket-inbox.local:8000",
+  "token": "same-as-POCKET_TOKEN-on-the-pi",
+  "timezone": "SGT-8",
+  "mic_gain": 4.0,
+  "idle_sleep_s": 120,
+  "cleanup_percent": 80,
+  "auto_slides": true,
+  "debug_ldr": false,
+  "ldr": { "r10": 15000, "gamma": 0.65, "r_fixed": 47000 }
+}

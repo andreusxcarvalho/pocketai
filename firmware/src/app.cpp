@@ -603,7 +603,9 @@ void App::pollSensors(uint32_t now) {
 #if FEAT_LDR
   if (now - lastSensors >= 1000) {
     lastSensors = now;
-    lastLux = ldr.readLux();
+    const float volts = ldr.readVolts();
+    lastLux = luxFromVolts(volts, ldr.calibration());
+    if (cfg.debugLdr) Serial.printf("ldr %.3f V %.1f lux\n", volts, lastLux);
     const bool wasDocked = ctx_.docked;
     light.update(lastLux, now);
     ctx_.docked = light.docked();

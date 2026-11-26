@@ -22,7 +22,8 @@ from .process import Options, process_session
 
 def _opts(a) -> Options:
     return Options(whisper_model=a.whisper, language=a.lang,
-                   ollama_model=None if a.no_llm else a.ollama_model, ollama_url=a.ollama_url, ocr=not a.no_ocr)
+                   ollama_model=None if a.no_llm else a.ollama_model, ollama_url=a.ollama_url, ocr=not a.no_ocr,
+                   transcribe=not a.no_asr)
 
 
 def cmd_process(a) -> None:
@@ -92,6 +93,7 @@ def main(argv: list[str] | None = None) -> None:
         p.add_argument("--ollama-url", default=os.environ.get("POCKET_OLLAMA_URL", "http://localhost:11434"))
         p.add_argument("--no-llm", action="store_true", help="extractive summary only")
         p.add_argument("--no-ocr", action="store_true")
+        p.add_argument("--no-asr", action="store_true", help="skip transcription (pipeline testing)")
 
     p = sub.add_parser("process", help="process one local session folder")
     p.add_argument("session")
