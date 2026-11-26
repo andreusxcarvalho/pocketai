@@ -1,0 +1,13 @@
+# PlatformIO
+firmware/.pio/
+firmware/.vscode/
+# host test binary
+firmware/test/host/pocket_tests
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+pipeline/data/
+# OS
+.DS_Store
